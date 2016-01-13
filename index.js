@@ -15,7 +15,7 @@ module.exports = {
       destDir: 'iscroll'
     });
 
-    let trees = iscrollTree;
+    var trees = iscrollTree;
     if (tree) {
       trees = mergeTrees([tree, iscrollTree]);
     }
@@ -24,7 +24,11 @@ module.exports = {
   },
 
   included: function(app) {
-    this._super.included.apply(this, ...arguments);
+    this._super.included.apply(this, arguments);
+
+    if (typeof app.import !== 'function' && app.app) {
+      this.app = app = app.app;
+    }
 
     app.import('vendor/iscroll/iscroll.js');
   },
